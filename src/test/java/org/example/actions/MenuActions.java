@@ -23,4 +23,19 @@ public class MenuActions {
 
         Menu.getBack().tap();
     }
+
+    public static void selectActor(String actorName){
+
+        Menu.getSettings().tap();
+        if(Menu.getSettings().getComponentProperty("Settings", "actorName").equals(actorName)){
+
+            Menu.getBack().tap();
+        }
+        else {
+
+            Menu.getNext().tap();
+            Menu.getBack().tap();
+        }
+
+    }
 }

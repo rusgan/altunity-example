@@ -55,4 +55,9 @@ public class Menu {
 
         return waitForElement("LevelComplete", false);
     }
+
+    public static AltUnityObject getMenu(){
+
+        return waitForElement("Menu");
+    }
 }

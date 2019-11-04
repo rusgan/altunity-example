@@ -11,6 +11,7 @@ import java.util.List;
 import static org.example.elements.Gamepad.*;
 import static org.example.elements.Level.getKeys;
 import static org.example.elements.Level.getSortedDoors;
+import static org.example.elements.Menu.getClose;
 
 public class ActorActions {
 
@@ -50,7 +51,7 @@ public class ActorActions {
         }
         else {
 
-            while(Level.getActor().getWorldX() < door.getWorldX() - Properties.DOOR_SIZE){
+            while(Level.getActor().getWorldX() > door.getWorldX() + Properties.DOOR_SIZE){
 
                 tap(Gamepad.getLeft());
             }
@@ -80,21 +81,30 @@ public class ActorActions {
         }
     }
 
-    public static void closeLevel(){
+    public static void moveToExit(){
 
-        if(Level.getActor().getWorldX() < Level.getExit().getWorldX()){
+        while(!Menu.getCloseMe().isEnabled() & !Menu.getLevelComplete().isEnabled()){
 
-            while(!Menu.getCloseMe().isEnabled() & !Menu.getLevelComplete().isEnabled()){
+            if(Level.getActor().getWorldX() < Level.getExit().getWorldX()){
 
                 tap(Gamepad.getRight());
             }
-        }
-        else {
-
-            while(!Menu.getCloseMe().isEnabled() & !Menu.getLevelComplete().isEnabled()){
+            else {
 
                 tap(Gamepad.getLeft());
             }
+        }
+    }
+
+    public static void closeLevel(){
+
+        moveToExit();
+        if(Menu.getCloseMe().isEnabled()){
+            Menu.getClose().tap();
+            Menu.getNext().tap();
+        }
+        else {
+            Menu.getNext().tap();
         }
     }
 }
